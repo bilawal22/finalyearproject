@@ -15,10 +15,11 @@ var UserSchema = new mongoose.Schema(
             mobilenum:String,
             email:String
         },
+        zip:String,
         userType:Integer,        
         updated_at:{type:Date,default:Date.now}
 
     }
 );
 
-module.exports = mongoose.model('Todo',TodoSchema);
+module.exports = mongoose.model('user',UserSchema);
