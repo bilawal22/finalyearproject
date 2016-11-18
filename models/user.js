@@ -15,10 +15,16 @@ var UserSchema = new mongoose.Schema(
             mobilenum:String,
             email:String
         },
+        password:String
+        ,
         zip:String,
-        userType:Integer,        
-        updated_at:{type:Date,default:Date.now}
-
+        usertype:Number,
+        picture:String,
+        age:Number,
+        Gender:Boolean,        
+        updated_at:{type:Date,default:Date.now},
+        rating:Number,
+        properties : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Property' }]
     }
 );
 

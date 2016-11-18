@@ -1,4 +1,7 @@
 var mongoose = require('mongoose');
+require('mongoose-double')(mongoose);
+
+var SchemaType =mongoose.Schema.Types;
 
 var propertySchema = new mongoose.Schema(
     {        
@@ -9,11 +12,13 @@ var propertySchema = new mongoose.Schema(
         area:String,
         plotnum:String,
         floornum:String,
-        propertyStatus:Integer,
+        zip:Number,       
+        lat:SchemaType.Double,
+        long:SchemaType.Double,
         updated_at:{type:Date,default:Date.now}
        
 
     }
 );
 
-module.exports = mongoose.model('address',UserSchema);
+module.exports = mongoose.model('address',propertySchema);

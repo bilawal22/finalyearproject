@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 
-var propertySchema = new mongoose.Schema(
+var upropertySchema = new mongoose.Schema(
     {        
-        userID:String,
+        utilityID:String,
         propertyID:String,       
         updated_at:{type:Date,default:Date.now}       
     }
 );
 
-module.exports = mongoose.model('sold',UserSchema);
+module.exports = mongoose.model('utilityproperty',upropertySchema);

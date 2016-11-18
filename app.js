@@ -1,14 +1,28 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var property = require('./routes/Property');
+var propAdd = require('./routes/PropertyAddress');
+var Utility = require('./routes/Utility');
+var UtilityProp = require('./routes/UtilityProperty');
+//var Sold = require('./routes/Sold');
+var Rating = require('./routes/Rating');
+var recommender = require('./routes/agentrecommender');
 
 var app = express();
+
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
+mongoose.connect('mongodb://localhost/realestate')
+.then(()=> console.log('conncetion successful'))
+.catch((err)=>console.error(err));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +38,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-
+app.use('/property', property);
+app.use('/propertyaddress', propAdd);
+app.use('/utility', Utility);
+app.use('/utilityproperty', UtilityProp);
+app.use('/rating', Rating);
+app.use('/recommender', recommender);
+ 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
