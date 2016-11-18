@@ -16,9 +16,9 @@
     <!-- Template -->
     <script type="text/ng-template" id="/register.html">
       <div>        
-        <input type="text" ng-model="name">
-        <input type="text" ng-model="email">
-        <input type="text" ng-model="password">        
+        <input type="text" ng-model="newUser">
+        <input type="text" ng-model="newEmail">
+        <input type="text" ng-model="newPassword">        
         <button ng-click="save()">Add</button>
        </div>
     </script>
@@ -30,8 +30,8 @@
         // Services
         //---------------
 
-        .factory('Todos', ['$resource', function($resource){
-          return $resource('/todos/:id', null, {
+        .factory('user', ['$resource', function($resource){
+          return $resource('/users/:id', null, {
             'update': { method:'PUT' }
           });
         }])
@@ -40,23 +40,32 @@
         // Controllers
         //---------------
 
-        .controller('TodoController', ['$scope', 'Todos', function ($scope, Todos) {
+        .controller('UserController', ['$scope', 'users', function ($scope, users) {
           $scope.editing = [];
-          $scope.todos = Todos.query();
+          $scope.users = users.query();
 
           $scope.save = function(){
-            if(!$scope.newTodo || $scope.newTodo.length < 1) return;
-            var todo = new Todos({ name: $scope.newTodo, completed: false });
+            if(!$scope.newUser || $scope.newUser.length < 1) return;
+            if(!$scope.newEmail || $scope.newUser.length < 1) return;
+            if(!$scope.newPassword || $scope.newUser.length < 1) return;
+            
+            var user = new users({ 
+            name: $scope.newUser,
+            email:$scope.newEmail,
+            password:$scope.newPassword
+            });
 
-            todo.$save(function(){
-              $scope.todos.push(todo);
-              $scope.newTodo = ''; // clear textbox
+            user.$save(function(){
+              $scope.users.push(user);
+              $scope.newUser = ''; 
+              $scope.newPassword = '';
+              $scope.newEmail = '';
             });
           }
 
           $scope.update = function(index){
-            var todo = $scope.todos[index];
-            Todos.update({id: todo._id}, todo);
+            var user = $scope.users[index];
+            users.update({id: user._id}, user);
             $scope.editing[index] = false;
           }
 
@@ -70,22 +79,14 @@
           }
 
           $scope.remove = function(index){
-            var todo = $scope.todos[index];
-            Todos.remove({id: todo._id}, function(){
-              $scope.todos.splice(index, 1);
+            var user = $scope.todos[index];
+            users.remove({id: user._id}, function(){
+              $scope.users.splice(index, 1);
             });
           }
         }])
 
-        .controller('TodoDetailCtrl', ['$scope', '$routeParams', 'Todos', '$location', function ($scope, $routeParams, Todos, $location) {
-          $scope.todo = Todos.get({id: $routeParams.id });
-
-          $scope.remove = function(){
-            Todos.remove({id: $scope.todo._id}, function(){
-              $location.url('/');
-            });
-          }
-        }])
+       
 
         //---------------
         // Routes
@@ -94,14 +95,9 @@
         .config(['$routeProvider', function ($routeProvider) {
           $routeProvider
             .when('/', {
-              templateUrl: '/todos.html',
-              controller: 'TodoController'
-            })
-
-            .when('/:id', {
-              templateUrl: '/todoDetails.html',
-              controller: 'TodoDetailCtrl'
-           });
+              templateUrl: '/register.html',
+              controller: 'UserController'
+            });
         }]);
     </script>
 
