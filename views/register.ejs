@@ -1,41 +1,76 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-  <div class="inside-banner">
-  <div class="container"> 
-    <span class="pull-right"><a href="#">Home</a> / Register</span>
-    <h2>Register</h2>
-</div>
-</div>
+ <% include ./partials/header %>   
+
 <!-- banner -->
 
-
-<div class="container">
-<div class="spacer">
-<div class="row register">
-  <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
-
-
-                <input type="text" class="form-control" placeholder="Full Name" name="form_name">
-                <input type="text" class="form-control" placeholder="Enter Email" name="form_email">
-                <input type="password" class="form-control" placeholder="Password" name="form_phone">
-                <input type="password" class="form-control" placeholder="Confirm Password" name="form_phone">
-
-                <textarea rows="6" class="form-control" placeholder="Address" name="form_message"></textarea>
-      <button type="submit" class="btn btn-success" name="Submit">Register</button>
-          
-
-
-                
-        </div>
+    <script>
+$(document).ready(function(){
   
-</div>
-</div>
-</div>
+  $('#addBtn').click(function(){ 
+    //alert($("#newUser").val());
+    var userData = {
+      name:{
+        firstname:$("#newUser").val()
+        },
+      contact:{
+        email:$("#newEmail").val()
+      },  
+      password:$("#newPassword").val(),
+      area : $("#newAddress").val()           
+      };
+    // data.;
+    // data.password = ;
+    // data.;
 
-   </body>
-</html>
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(userData),
+          contentType: 'application/json',
+                  url: 'register',						
+                  success: function(data) {
+                      console.log('success');
+                      var res= JSON.stringify(data);
+                      if(res){
+                        alert("Successfully registered..!");
+                        $("#newUser").val('');
+                        $("#newPassword").val('');
+                        $("#newEmail").val('')
+                        $("#newAddress").val('');
+                      } else{
+                        alert("Some error occured..!");
+                      }
+                  }
+      });				
+    });		 
+  });
+</script>
+
+
+
+    <div class="inside-banner">
+      <div class="container"> 
+      <span class="pull-right"><a href="#">Home</a> / Register</span>
+      <h2>Register</h2>
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="spacer">
+        <div class="row register">
+          <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
+            
+            <input type="text" class="form-control"  placeholder="Full Name" id="newUser" required >
+            
+            <input type="text" class="form-control" placeholder="Enter Email" id="newEmail" required >
+            
+            <input type="password" class="form-control" placeholder="Password" id="newPassword" required >            
+            
+            <textarea rows="6" class="form-control" placeholder="Address" id="newAddress" required ></textarea>          
+           
+            <button id='addBtn'>Add</button>                
+          </div>  
+      </div>
+    </div>
+    </div>
+ 
+
+ <% include ./partials/footer %>   

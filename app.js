@@ -13,6 +13,7 @@ var UtilityProp = require('./routes/UtilityProperty');
 //var Sold = require('./routes/Sold');
 var Rating = require('./routes/Rating');
 var recommender = require('./routes/agentrecommender');
+var register = require('./routes/register');
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use('/utility', Utility);
 app.use('/utilityproperty', UtilityProp);
 app.use('/rating', Rating);
 app.use('/recommender', recommender);
+app.use('/register', register);
  
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
