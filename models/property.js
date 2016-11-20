@@ -4,7 +4,7 @@ var SchemaType =mongoose.Schema.Types;
 
 var propertySchema = new mongoose.Schema(
     {        
-        userID:[{type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
+        userID:{type: mongoose.Schema.Types.ObjectId, ref: 'user' },
         propertype:String,
         NumOfRoom:Number,
         price:String,
@@ -24,7 +24,6 @@ var propertySchema = new mongoose.Schema(
         lat:SchemaType.Double,
         long:SchemaType.Double           
         
-
     }
 );
 

@@ -14,6 +14,7 @@ var UtilityProp = require('./routes/UtilityProperty');
 var Rating = require('./routes/Rating');
 var recommender = require('./routes/agentrecommender');
 var register = require('./routes/register');
+var login = require('./routes/login');
 
 var app = express();
 
@@ -24,6 +25,7 @@ mongoose.connect('mongodb://localhost/realestate')
 .then(()=> console.log('conncetion successful'))
 .catch((err)=>console.error(err));
 
+app.set('superSecret', 'realscenerio')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -46,6 +48,7 @@ app.use('/utilityproperty', UtilityProp);
 app.use('/rating', Rating);
 app.use('/recommender', recommender);
 app.use('/register', register);
+app.use('/login',login);
  
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

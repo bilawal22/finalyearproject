@@ -22,9 +22,8 @@ var UserSchema = new mongoose.Schema(
         picture:String,
         age:Number,
         Gender:Boolean,        
-        updated_at:{type:Date,default:Date.now},
-        rating:Number,
-        properties : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Property' }]
+        updated_at:{type:Date,default:Date.now},       
+        properties : { type: mongoose.Schema.Types.ObjectId, ref: 'Property' }
     }
 );
 
