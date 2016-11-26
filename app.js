@@ -15,6 +15,9 @@ var Rating = require('./routes/Rating');
 var recommender = require('./routes/agentrecommender');
 var register = require('./routes/register');
 var login = require('./routes/login');
+var propertyDetail = require('./routes/propertyDetail');
+var sendemail = require('./routes/sendemail');
+
 
 var app = express();
 
@@ -49,6 +52,8 @@ app.use('/rating', Rating);
 app.use('/recommender', recommender);
 app.use('/register', register);
 app.use('/login',login);
+app.use('/property-detail',propertyDetail);
+app.use('/sendemail',sendemail);
  
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
