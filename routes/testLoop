@@ -1,0 +1,56 @@
+areas.forEach(function(area){
+        async.waterfall(
+            [
+                 function(callback){
+                    modelProperty.find({'area': area }, function(err, areaAgent) {
+                            var agentsID=[];
+
+                            areaAgent.forEach(function(agent){
+                                agentsID.push(agent['userID']);
+                            });
+
+                            agentsID = uniqueArray(agentsID);
+                            callback(null,agentsID);
+
+                    });
+            }, function(agentsID,callback){
+             
+                async.forEach(agentsID, function (item, callback){ 
+            
+                    modelRating.aggregate([                           
+                        {$group: {_id:item , average: {$avg: '$rating'}}}
+                    ], function (err, result) {              
+                        if(err)
+                            console.log(err);
+                        else{
+                        result.forEach(function(agentRate){
+                            AgentRatings.push(new Rating(agentRate['_id'],agentRate['average']));
+                        })
+                        
+                        //console.log(AgentRatings);
+                        callback(AgentRatings);  
+                        }                             
+                                            
+                    });       
+                }, function(AgentRatings) {
+                            
+                        
+                        var areaAgents= new ratingAgent(area,AgentRatings);
+                        areasAgentRating.push(areaAgents);
+                    
+                        //console.log(areasAgentRating);
+                        callback(null,areasAgentRating);
+                        
+                });  
+            }
+            ],function (err, result) {
+           
+                    console.info("4");
+                   // console.info(err);
+                    console.info(result);
+           }
+        )   
+       
+
+
+ });

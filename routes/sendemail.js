@@ -13,7 +13,7 @@ function sendEmail(req, res) {
         service: 'Gmail',
         auth: {
             user: 'bilawal225@gmail.com', // Your email id
-            pass: 'ddbbtt22' // Your password
+            pass: '' // Your password
         }
     });
     

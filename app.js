@@ -17,6 +17,7 @@ var register = require('./routes/register');
 var login = require('./routes/login');
 var propertyDetail = require('./routes/propertyDetail');
 var sendemail = require('./routes/sendemail');
+var testingRoute = require('./routes/testasync');
 
 
 var app = express();
@@ -25,7 +26,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://localhost/realestate')
-.then(()=> console.log('conncetion successful'))
+.then(()=> console.log('connection successful'))
 .catch((err)=>console.error(err));
 
 app.set('superSecret', 'realscenerio')
@@ -54,6 +55,7 @@ app.use('/register', register);
 app.use('/login',login);
 app.use('/property-detail',propertyDetail);
 app.use('/sendemail',sendemail);
+app.use('/testing',testingRoute);
  
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
