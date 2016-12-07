@@ -25,8 +25,13 @@ function sendEmail(req, res) {
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
+<<<<<<< HEAD
             user: 'saadaslam237@gmail.com', // Your email id
             pass: 'saadbaba' // Your password
+=======
+            user: 'bilawal225@gmail.com', // Your email id
+            pass: '' // Your password
+>>>>>>> 3db6ed06e77c9d04546db647285474b6bb8d558e
         }
     });
     

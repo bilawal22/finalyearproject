@@ -22,8 +22,9 @@ var propertySchema = new mongoose.Schema(
         floornum:String,
         zip:Number,       
         lat:SchemaType.Double,
-        long:SchemaType.Double           
-        
+        long:SchemaType.Double,
+        rating:Number
+                         
     }
 );
 

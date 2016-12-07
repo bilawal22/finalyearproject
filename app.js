@@ -17,12 +17,16 @@ var register = require('./routes/register');
 var login = require('./routes/login');
 var propertyDetail = require('./routes/propertyDetail');
 var sendemail = require('./routes/sendemail');
+<<<<<<< HEAD
 var testingRoute = require('./routes/testingroute');
 var ratingDialog = require('./routes/ratingdailog');
 var uploadImage = require('./routes/uploadImage');
 var adminDashboard = require('./routes/adminDash');
 var adminInbox = require('./routes/admin_Inbox');
 var propertystate = require('./routes/propertyStatus');
+=======
+var testingRoute = require('./routes/testasync');
+>>>>>>> 3db6ed06e77c9d04546db647285474b6bb8d558e
 
 
 var app = express();
@@ -61,12 +65,15 @@ app.use('/login',login);
 app.use('/property-detail',propertyDetail);
 app.use('/sendemail',sendemail);
 app.use('/testing',testingRoute);
+<<<<<<< HEAD
 app.use('/ratingdialog',ratingDialog);
 app.use('/uploadImage',uploadImage);
 app.use('/adminDash',adminDashboard);
 app.use('/adminInbox',adminInbox);
 app.use('/propertyStatus',propertystate);
 
+=======
+>>>>>>> 3db6ed06e77c9d04546db647285474b6bb8d558e
  
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

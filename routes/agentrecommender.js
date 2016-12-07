@@ -84,6 +84,7 @@ function AgentsRatingList(areas,res){
 
 
  }  
+<<<<<<< HEAD
 
  class ratingAgent{
             
@@ -263,6 +264,187 @@ var functions = [];
 
                             }
 
+=======
+
+ class ratingAgent{
+            
+        constructor(area,agentRating){
+            this._area = area;
+            this._agentRating = agentRating;
+        }
+        get area(){
+            return this._area;
+        }
+        set area(_area){
+            this._area = _area;
+        }
+
+        get agentRating(){
+            return this._agentRating;
+        }
+        set agentRating(_agentRating){
+            this._agentRating = _agentRating;
+        }
+ }
+            
+          
+var AgentRatings = [];
+var functions = [];  
+
+  async.forEach(areas, function (area, callback){ 
+   modelProperty.find({'area': area }, function(err, areaAgent) {
+                            var agentsID=[];
+                          
+                            areaAgent.forEach(function(agent){
+                                agentsID.push(agent['userID']);
+                            });
+
+                            agentsID = uniqueArray(agentsID);
+                          
+                            async.forEach(agentsID, function (item, callback){ 
+            
+                            modelRating.aggregate(
+                                [                           
+                                    {$group: {
+                                        _id:item , average: {$avg: '$rating'}
+                                    }
+                                }
+
+                                ], function (err, result) {              
+                                    if(err)
+                                        console.log(err);
+                                    else{
+                                    result.forEach(function(agentRate){
+                                       
+                                        AgentRatings = [];
+                                        AgentRatings.push(new Rating(agentRate['_id'],agentRate['average']));
+                                    })
+                                                                       
+                                   callback(null,null);  
+                                    }                             
+                                                        
+                                });       
+                            }, function(err,result) {
+                                        
+                                    
+                                var areaAgents= new ratingAgent(area,AgentRatings);
+                               
+                                areasAgentRating.push(areaAgents);
+
+                             
+                               
+                                callback(null,null);                                
+                                
+                            });  
+                
+                    });
+                },function(err,result) {
+
+                    var areaAgentRating = areasAgentRating[0];
+                    topMatches(areaAgentRating.area,areasAgentRating);
+                    var rating;
+                     
+                    function topMatches(area, areasAgentRating){
+                        //var sortedList = areasAgentRating
+                    
+                        areasAgentRating.forEach(function (areaAgent){
+                            agentRecommendation[areaAgent['area']]=areaAgent['agentRating'];
+                        });
+                      
+                        
+                        var sortedList = new LINQ(areasAgentRating)
+                            .Where(row => row.area != area)
+                            .OrderBy(row=>row)
+                            .ToArray();
+
+                        var recommendations = [];
+                    
+                        sortedList.forEach(function(property){
+                                CalculatePearsonCorrelation(area, property.area);
+                               // console.log(rating);
+                                recommendations.push(new Recommendation(property.area,rating));
+                        });
+
+                        recommendations = new LINQ(recommendations).OrderByDescending(x=>x.rating).ToArray();
+                        recommendations = recommendations.slice(0,3);
+                      //  res.json(areasAgentRating);
+                       
+                        var agentsRecommendation = [];
+                         
+                         recommendations.forEach(function(recom){
+                            //console.log(recom);
+                            agentsRecommendation.push( new LINQ(areasAgentRating).
+                                Where(x=>x._area==recom._area).ToArray());
+                        });
+                       // console.log(agentsRecommendation);
+                       var _agentRating =[];
+                       var agentList = [];
+                        agentsRecommendation.forEach(function(agents){
+                            agents.forEach(function(agent){
+                                //console.log();
+                                _agentRating =agent['_agentRating'];
+                               // console.log(_agentRating[0]['_userID']); 
+                                _agentRating.forEach(function(userID){
+                                   agentList.push(userID['_userID']);
+                                });
+                                
+                            });
+                           
+                        });
+                        
+                        console.log(agentList);
+                    }
+
+                    function CalculatePearsonCorrelation(product1, product2){
+                        var sharedItem =[];
+                        agentRecommendation[product1].forEach(function(recommend){
+                    
+                            var isMatch = (new LINQ(agentRecommendation[product2])
+                                .Where(x=>x._userID==recommend._userID).Count() !=0);
+                           
+                            if (isMatch)
+                            {
+                            sharedItem.Add(item);
+                            }                
+                            
+                            if(sharedItem.length==0)
+                            {                                                               
+                                rating = sharedItem.length;
+                                return sharedItem.length;
+                            }
+                        
+                            var product1_review_sum = 0.00;
+                        
+                            for (item in sharedItem)
+                            {
+                                product1_review_sum += new LINQ(agentRecommendation[product1]).Where(x => x.area == item.area).FirstOrDefault().rating;
+                            }
+
+                            var product2_review_sum = 0.00;
+                            for (item in sharedItem)
+                            {
+                                product2_review_sum += new LINQ(agentRecommendation[product2]).Where(x => x.area == item.area).FirstOrDefault().Rating;
+                            }
+
+                            // sum up the squares
+                            var product1_rating = 0;
+                            var product2_rating = 0;
+                            for (item in sharedItem)
+                            {
+                                product1_rating += Math.Pow( new LINQ(agentRecommendation[product1]).Where(x => x.area == item.area).FirstOrDefault().Rating, 2);
+                                product2_rating += Math.Pow(new LINQ(agentRecommendation[product2]).Where(x => x.area == item.area).FirstOrDefault().Rating, 2);
+                            }
+
+                            //sum up the products
+                            var critics_sum = 0;
+                            for (item in sharedItem)
+                            {
+                                critics_sum += new LINQ(agentRecommendation[product1]).Where(x => x.area == item.area).FirstOrDefault().Rating *
+                                                new LINQ(agentRecommendation[product2]).Where(x => x.area == item.area).FirstOrDefault().Rating;
+
+                            }
+
+>>>>>>> 3db6ed06e77c9d04546db647285474b6bb8d558e
                             //calculate pearson score
                             var num = critics_sum - (product1_review_sum * product2_review_sum / sharedItem.length);
 
@@ -277,6 +459,7 @@ var functions = [];
                             return num / density;              
                          });                
                 
+<<<<<<< HEAD
                     }    
 
                     function recommendedAgent(agentList){
@@ -293,6 +476,9 @@ var functions = [];
                             console.log(agentRecommendedName);
                         });
                     }                                                                                                               
+=======
+                    }                                                                                                                   
+>>>>>>> 3db6ed06e77c9d04546db647285474b6bb8d558e
              }); 
 
 
@@ -300,4 +486,8 @@ var functions = [];
 
 
 }
+<<<<<<< HEAD
 module.exports = router;
+=======
+module.exports = router;
+>>>>>>> 3db6ed06e77c9d04546db647285474b6bb8d558e
