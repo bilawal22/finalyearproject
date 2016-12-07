@@ -4,9 +4,11 @@ var router = express.Router();
 var property = require('../models/property.js')
 
 /* GET propertys listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res, next) 
+{
   property.find(function(err,propertys){
       if(err) return next(err);
+
       res.json(propertys);
   });
 });
@@ -14,6 +16,7 @@ router.get('/', function(req, res, next) {
 
 /* POST /property */
 router.post('/',function(req, res, next){
+ // console.log(res.body.area);  
   property.create(req.body,function(err,post){
     if(err) return next(err);
     res.json(post);

@@ -48,34 +48,7 @@
 <script>
 $(document).ready(function(){
   
-  $('#btnSignIn').click(function(){ 
-    //alert('hello');
-    var userData = {
-      email:$("#InputEmail").val(),
-      password:$("#InputPassword").val()
-    };                     
-    $.ajax({
-      type: 'POST',
-      data: JSON.stringify(userData),
-          contentType: 'application/json',
-            url: 'login',						
-            success: function(data) {
-                
-                var res= JSON.stringify(data);
-                console.log(res);
-                if(res['success']){
-                  alert("Login..!");
-                  $("#InputEmail").val('');
-                  $("#InputPassword").val('');
-                                          
-                } else{
-                  alert("Wrong Detail..!");
-                }
-            },error: function (request, status, error) {
-                alert(request.responseText);
-            }
-      });				
-    });		 
+ 		 
   });
 </script>
 
@@ -88,7 +61,6 @@ $(document).ready(function(){
       <div class="row">
         <div class="col-sm-6 login">
           <h4>Login</h4>
-          <form class="" role="form">
             <div class="form-group">
               <label class="sr-only" for="InputEmail">Email address</label>
               <input type="email" class="form-control" id="InputEmail" placeholder="Enter email">
@@ -103,7 +75,7 @@ $(document).ready(function(){
           </label>
             </div>
             <button id='btnSignIn' class="btn btn-success">Sign in</button>
-          </form>
+         
         </div>
         <div class="col-sm-6">
           <h4>New User Sign Up</h4>

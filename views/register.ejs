@@ -1,48 +1,47 @@
  <% include ./partials/header %>   
 
 <!-- banner -->
-
     <script>
-$(document).ready(function(){
-  
-  $('#addBtn').click(function(){ 
-    //alert($("#newUser").val());
-    var userData = {
-      name:{
-        firstname:$("#newUser").val()
-        },
-      contact:{
-        email:$("#newEmail").val()
-      },  
-      password:$("#newPassword").val(),
-      area : $("#newAddress").val()           
-      };
-    // data.;
-    // data.password = ;
-    // data.;
+    $(document).ready(function(){
+      
+      $('#addBtn').click(function(){ 
+        //alert($("#newUser").val());
+        var userData = {
+          name:{
+            firstname:$("#newUser").val()
+            },
+          contact:{
+            email:$("#newEmail").val()
+          },  
+          password:$("#newPassword").val(),
+          area : $("#newAddress").val()           
+          };
+        // data.;
+        // data.password = ;
+        // data.;
 
-    $.ajax({
-      type: 'POST',
-      data: JSON.stringify(userData),
-          contentType: 'application/json',
-                  url: 'register',						
-                  success: function(data) {
-                      console.log('success');
-                      var res= JSON.stringify(data);
-                      if(res){
-                        alert("Successfully registered..!");
-                        $("#newUser").val('');
-                        $("#newPassword").val('');
-                        $("#newEmail").val('')
-                        $("#newAddress").val('');
-                      } else{
-                        alert("Some error occured..!");
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(userData),
+              contentType: 'application/json',
+                      url: 'register',						
+                      success: function(data) {
+                          console.log('success');
+                          var res= JSON.stringify(data);
+                          if(res){
+                            alert("Successfully registered..!");
+                            $("#newUser").val('');
+                            $("#newPassword").val('');
+                            $("#newEmail").val('')
+                            $("#newAddress").val('');
+                          } else{
+                            alert("Some error occured..!");
+                          }
                       }
-                  }
-      });				
-    });		 
-  });
-</script>
+          });				
+        });		 
+      });
+    </script>
 
 
 

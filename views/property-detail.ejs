@@ -1,5 +1,40 @@
 <% include ./partials/header %>    
 <!-- banner -->
+<script>
+$(document).ready(function(){
+  
+  $('#btnSubmitEmail').click(function(){ 
+    //alert($("#newUser").val());
+    var userData = {
+      name:$("#emailFullName").val(),
+        emailFrom:$("#emailEmail").val(),  
+      number:$("#emailNumber").val(),
+      emailbody: $("#EmailBody").val()           
+      };
+
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(userData),
+          contentType: 'application/json',
+                  url: 'sendemail',						
+                  success: function(data) {
+                      console.log('success');
+                      var res= JSON.stringify(data);
+                      //if(res){
+                        alert("Successfully send..!");
+
+                        $("#emailFullName").val(' '),
+                        $("#emailEmail").val(' '),  
+                        $("#emailNumber").val(' '),
+                        $("#EmailBody").val(' ')  
+                     // } else{
+                       // alert("Some error occured..!");
+                      //}
+                  }
+      });				
+    });		 
+  });
+</script>
 <div class="inside-banner">
   <div class="container"> 
     <span class="pull-right"><a href="#">Home</a> / Buy</span>
@@ -138,13 +173,13 @@
 <div class="col-lg-12 col-sm-6 ">
 <div class="enquiry">
   <h6><span class="glyphicon glyphicon-envelope"></span> Post Enquiry</h6>
-  <form role="form">
-                <input type="text" class="form-control" placeholder="Full Name"/>
-                <input type="text" class="form-control" placeholder="you@yourdomain.com"/>
-                <input type="text" class="form-control" placeholder="your number"/>
-                <textarea rows="6" class="form-control" placeholder="Whats on your mind?"></textarea>
-      <button type="submit" class="btn btn-primary" name="Submit">Send Message</button>
-      </form>
+  <div >
+      <input type="text" class="form-control" id='emailFullName' placeholder="Full Name"/>
+      <input type="text" class="form-control" id='emailEmail' placeholder="you@yourdomain.com"/>
+      <input type="text" class="form-control" id='emailNumber' placeholder="your number"/>
+      <textarea rows="6" class="form-control" id='EmailBody' placeholder="Whats on your mind?"></textarea>
+      <button class="btn btn-primary" id="btnSubmitEmail">Send Message</button>
+      </div>
  </div>         
 </div>
   </div>

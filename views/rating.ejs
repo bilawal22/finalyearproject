@@ -1,0 +1,92 @@
+
+
+<html>
+    <head>
+        <title>
+            Rate
+        </title>
+        <link rel="stylesheet" href="/stylesheets/cs_estate.css"/>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script>
+//         $(document).load(function(){
+//             alert('hello');
+//         $("#ratepop").dialog({modal:true});   
+//        });
+
+// $(document).load(function(){
+//             alert('hello');
+//         $("#ratepop").dialog({modal:true});   
+//        });
+
+
+$(document).ready(function(){
+  
+  $('#star3').click(function(){ 
+    //alert($("#newUser").val());
+    var rate = $('#star3').val();
+    var userData = {
+        rating:rate,
+        propertyID :"58452f002f905e15d0f5e8d8",
+        userID :"58446dc405b7da04886070b0"          
+      };
+
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(userData),
+          contentType: 'application/json',
+                  url: 'rating',						
+                  success: function(data) {
+                      console.log('success');
+                      var res= JSON.stringify(data);
+                      //if(res){
+                        alert("Successfully send..!");
+
+                        $("#emailFullName").val(' '),
+                        $("#emailEmail").val(' '),  
+                        $("#emailNumber").val(' '),
+                        $("#EmailBody").val(' ')  
+                     // } else{
+                       // alert("Some error occured..!");
+                      //}
+                  }
+      });				
+    });		 
+  });
+
+
+    </script>   
+
+    </head>
+    <body>
+
+        <div id="ratepop" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="row">
+                <div class="col-sm-6 login">
+
+
+        <h1>Please Rate this Agent </h1>
+        <fieldset class="rating">
+            <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+            <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+            <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+            <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+            <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+            <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+            <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+            <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+            <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+        </fieldset>
+                    </div>         
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </body>
+    
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hamari Zameen - Dashboard</title>
+
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/datepicker3.css" rel="stylesheet">
+<link href="/css/styles.css" rel="stylesheet">
+
+<!--Icons-->
+<script src="/js/lumino.glyphs.js"></script>
+    <script src="/js/jquery-1.11.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/chart.min.js"></script>
+	<script src="/js/chart-data.js"></script>
+	<script src="/js/easypiechart.js"></script>
+	<script src="/js/easypiechart-data.js"></script>
+	<script src="/js/bootstrap-datepicker.js"></script>
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+
+
+<script type="text/javascript"
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf7X8joiohHvva95xuLwbcEN3uKyF1Iuw">
+</script>
+<script type="text/javascript">
+
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(24.879277651928316, 67.01921874999992);
+        var myOptions = {
+            zoom:10,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+        // marker refers to a global variable
+        marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map
+        });
+		
+		
+		//window explore
+		// var addres=document.getElementById("addi").value;
+	//	infowindow = new google.maps.InfoWindow(
+		//							   {content:addres}); 
+		  // google.maps.event.addListener(marker, 'click', function()
+			//						   {infowindow.open(map,marker);});
+				//					   infowindow.open(map,marker);	
+									 						   
+									
+        // if center changed then update lat and lon document objects
+        google.maps.event.addListener(map, 'center_changed', function () {
+            var location = map.getCenter();
+            document.getElementById("lati").value = location.lat();
+
+            document.getElementById("longi").value = location.lng();
+            // call function to reposition marker location
+            placeMarker(location);
+        });
+        // if zoom changed, then update document object with new info
+        google.maps.event.addListener(map, 'zoom_changed', function () {
+            zoomLevel = map.getZoom();
+            document.getElementById("zoom_level").innerHTML = zoomLevel;
+        });
+        // double click on the marker changes zoom level
+        google.maps.event.addListener(marker, 'dblclick', function () {
+            zoomLevel = map.getZoom() + 1;
+            if (zoomLevel == 20) {
+                zoomLevel = 10;
+            }
+            document.getElementById("zoom_level").innerHTML = zoomLevel;
+            map.setZoom(zoomLevel);
+        });
+
+        function placeMarker(location) {
+            var clickedLocation = new google.maps.LatLng(location);
+            marker.setPosition(location);
+        }
+    }
+    window.onload = function () { initialize() };
+	
+</script>
+     <style>
+ div#gmap {
+        width: auto;
+        height: 500px;
+      /* border: 1px solid black;*/
+ }
+ 
+    </style>
+
+
+
+
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>Agent</span>Panel</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
+							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+							<li id="linkDashboard"><a href="/"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+							
+		</div><!-- /.container-fluid -->
+	</nav>
+		
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2  sidebar">
+		<form role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+		</form>
+		<ul class="nav menu">
+			<li class="active"><a href="adminDash"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Sale Property</a></li>
+			<li><a href="adminInbox"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Inbox</a></li>
+			<li><a href="propertyStatus"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Active Property List</a></li>
+			<!--<li><a href="forms.html"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Forms</a></li>-->
+			<!--<li><a href="panels.html"><svg class="glyph stroked app-window"><use xlink:href="#stroked-app-window"></use></svg> Alerts &amp; Panels</a></li>
+			<li><a href="icons.html"><svg class="glyph stroked star"><use xlink:href="#stroked-star"></use></svg> Icons</a></li>-->
+			
+	</div><!--/.sidebar-->

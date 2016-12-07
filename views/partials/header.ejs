@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Realestate Bootstrap Theme </title>
+<title>Hamari Zameen </title>
 <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+  
  	<link rel="stylesheet" href="/bootstrap/css/bootstrap.css" />
    <link rel='stylesheet' href='/stylesheets/style.css' />
 
@@ -36,7 +36,44 @@
 
    <!-- Libraries -->
     
+    <script type="text/javascript" >
+      $(document).ready(function(){
+           $("#linkDash").hide();
 
+            $('#btnSignIn').click(function(){ 
+    //alert('hello');
+    
+    $("#loginpop").hide();
+    $("#linkDash").show();
+    var userData = {
+      email:$("#InputEmail").val(),
+      password:$("#InputPassword").val()
+    };                     
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(userData),
+          contentType: 'application/json',
+            url: 'login',						
+            success: function(data) {
+                
+                var res= JSON.stringify(data);
+                aler.log(res);
+                if(res['success']){
+                  alert("Login..!");
+                  $("#InputEmail").val('');
+                  $("#InputPassword").val('');
+                 
+                                          
+                } else{
+                  alert("Wrong Detail..!");
+                }
+            },error: function (request, status, error) {
+                alert(request.responseText);
+            }
+      });				
+      });
+      });
+    </script>
     <!-- Header Starts -->
     <div class="navbar-wrapper">
 
@@ -63,6 +100,7 @@
                     <li><a href="agents.php">Agents</a></li>         
                     <li><a href="blog.php">Blog</a></li>
                     <li><a href="contact.php">Contact</a></li>
+                     <li id="linkDash"><a href="adminDash">Dashboard</a></li>
                   </ul>
                 </div>
                 <!-- #Nav Ends -->

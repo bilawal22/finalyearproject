@@ -9,21 +9,34 @@ router.post('/', function(req, res, next) {
 
 function sendEmail(req, res) {
     // Not the movie transporter!
+
+
+    //   name:$("#emailFullName").val(),
+    //     emailTo:$("#emailEmail").val(),  
+    //   number:$("#emailNumber").val(),
+    //   emailbody: $("#EmailBody").val()  
+    
+    var name = req.body.name;
+    var fromEmail = req.body.emailFrom;
+    var number = req.body.number;
+    var body = req.body.emailbody;
+
+
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: 'bilawal225@gmail.com', // Your email id
-            pass: 'ddbbtt22' // Your password
+            user: 'saadaslam237@gmail.com', // Your email id
+            pass: 'saadbaba' // Your password
         }
     });
     
-    var text = 'Hello world from \n\n' + req.body.name;
+    var text = body+ '\n\n  http://localhost:3000/property-detail \nClient Name: '+  name + '\n\n Client Number: ' + number;
 
     var mailOptions = {
-    from: 'bilawal_22@live.com', // sender address
-    to: 'bilawal225@gmail.com', // list of receivers
-    subject: 'Email Example', // Subject line
-    text: text 
+    from: fromEmail, // sender address
+    to: 'tahirnisar8@gmail.com', // list of receivers
+    subject: 'Property Query', // Subject line
+    text: text
    };
 
 

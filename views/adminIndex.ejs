@@ -1,0 +1,192 @@
+	<% include ./partials/adminHeader %> 
+
+  <script>
+    $(document).ready(function(){});
+      
+	//   $('#upbtn').click(function() {
+    //    // $("#status").empty().text("File is uploading...");
+    //     $.ajax({
+	// 		url:'uploadImage',
+	// 		mehtod:'post',
+    //         error: function(xhr) {
+    //       status('Error: ' + xhr.status);
+    //     },
+    //         success: function(response) {
+    //         console.log(response)
+    //         $("#status").empty().text(response);
+    //         }
+    //  });
+    // return false;
+    // });    
+
+    //   $('#probtn').click(function(){ 
+    //     //alert("han bai");
+        		 
+    //   });
+
+	  function SendRequest(){
+		 
+		  var propertyData = {
+          userID:"58446dc405b7da04886070b4",
+		  propertype: $("#protype").val(),
+		  price:$("#price").val(),
+		  propertyStatus:'1',          
+	       country:$("#country").val(),
+		   city:$("#city").val(),
+		   zip:$("#zip").val(), 
+           lat:$("#lati").val(),
+		   long:$("#longi").val(),
+           area:$("#area").val() 
+		};
+
+		 // alert(JSON.stringify(propertyData));
+        // data.;
+        // data.password = ;
+        // data.;
+		console.log(JSON.stringify(propertyData));
+
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(propertyData),
+              contentType: 'application/json',
+                      url: 'adminDash',						
+                      success: function(data) {
+                          console.log('success');
+						  
+                          //var res= JSON.stringify(data);
+                          //if(res){
+                            //alert("Successfully added new property..!");
+                            $("#protype").val('');
+                            $("#country").val('');
+                            $("#city").val('');
+                            $("#area").val('');
+							$("#zip").val('');
+                            $("#lati").val('');
+							$("#longi").val('');
+                            $("#images").val('');
+							$("#utility").val('');
+                            
+                        //   } else{
+                        //     alert("Some error occured..!");
+                        //   }
+                      }
+          });				
+	  }
+    </script>
+
+
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">	
+        <div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header"> Sale Property</h1>
+			</div>
+		</div><!--/.row-->	
+		<div class="row">
+			<div class="col-md-10 col-sm-offset-1">
+							<form role="form"  id="uploadForm"
+          enctype="multipart/form-data"   method="post">
+							
+								<div class="form-group">
+									<label>Property Type</label>
+									<select class="form-control" id="protype" >
+										<option value="Land">Land</option>
+										<option value="Plot">Plot</option>
+										<option value="Appartment">Appartment</option>
+									</select>
+								</div>
+								
+								<div class="form-group">
+									<label>Country</label>
+									<select class="form-control" id="country">
+										<option value="Pakistan">Pakistan</option>
+									</select>
+								</div>
+								
+								<div class="form-group">
+									<label>City</label>
+									<select class="form-control" id="city">
+										<option value="Karachi">Karachi</option>
+										<option value="Faislabad">Faislabad</option>
+										<option value="Islamabad">Islamabad</option>
+										<option value="Lahore">Lahore</option>
+									</select>
+								</div>
+								
+								<div class="form-group">
+									<label>Zip Code</label>
+									<input class="form-control" placeholder="Zip" id="zip">
+								</div>
+								
+								
+								<div class="form-group">
+									<label>Area Address </label>
+									<input class="form-control" placeholder="Area" id ="area">
+								</div>
+
+									
+								<div class="form-group">
+									<label>Price</label>
+									<input class="form-control" placeholder="price" id="price"> 
+								</div>
+							
+							
+								<div class="form-group">
+									<label>Utilities</label>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" value="Transport" id="utility">Transport
+										</label>
+										<label>
+											<input type="checkbox" value="Water" id="utility">Water
+										</label>
+										<label>
+											<input type="checkbox" value="Sui Gas" id="utility">Sui Gas
+										</label>
+										<label>
+											<input type="checkbox" value="Electricity" id="utility">Electricity
+										</label>
+									</div>
+									
+								</div>
+								
+								<div class="form-group">
+									<label>Authority</label>
+									<input type="file" id="authority">
+									 <p class="help-block">Example block-level pdf/docs.</p>
+								</div>
+								
+								<div class="form-group">
+									<!--action="uploadImage" enctype="multipart/form-data"   method="post"-->
+									<div id="uploadForm" >
+									<label>Image Upload</label>
+									<input type="file" id="images" multiple/>
+									 <span class="help-block"  id = "status">jpg/png/.</span>
+									<!--<p class="help-block"> jpg/png/.</p>-->
+									<!--<button  class="btn btn-primary" id="upbtn">Upload Image</button>-->
+									</div>
+								</div>
+							
+								<div class="form-group">
+									<label>Latitude</label>
+									<input class="form-control" placeholder="" id="lati" readonly/>
+								</div>
+								
+								<div class="form-group">
+									<label>Longitude</label>
+									<input class="form-control" placeholder="" id="longi" readonly/>
+								</div>
+
+								<div><h4><span class="glyphicon glyphicon-map-marker"></span> Location</h4>
+                              <div class="well" id="gmap" ></div>
+                                  </div>
+				
+								
+							<div class="col-lg-2 col-lg-offset-10">	
+							<button  class="btn btn-primary" onclick="SendRequest()" id="probtn">Submit Button</button>
+							</div>
+							
+								
+		</div><!--/.row-->	
+	</div>	<!--/.main-->
+
+	<% include ./partials/adminFooter %> 
